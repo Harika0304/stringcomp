@@ -1,0 +1,70 @@
+import java.util.Scanner;
+
+public class Main {
+public static void main(String[] args) {
+Scanner scanner = new Scanner(System.in);
+System.out.println("Welcome to the String Comparison program!");
+
+
+  int numStrings;
+  do {
+     System.out.print("Please enter the number of strings to compare : ");
+     numStrings = scanner.nextInt();
+     if (numStrings < 2) {
+        System.out.println("You must enter at least 2 strings.");
+     } else if (numStrings > 5) {
+        System.out.println("You can only compare up to 5 strings.");
+     }
+  } while (numStrings < 2 || numStrings > 5);
+
+  String[] strings = new String[numStrings];
+  for (int i = 0; i < numStrings; i++) {
+     System.out.print("Please enter string #" + (i + 1) + ": ");
+     strings[i] = scanner.next();
+  }
+
+  String comparisonType;
+  do {
+     System.out.print("Would you like to compare the strings by 'vowels' or 'consonants'? ");
+     comparisonType = scanner.next();
+  } while (!comparisonType.equals("vowels") && !comparisonType.equals("consonants"));
+
+  for (String string : strings) {
+     countVowelsOrConsonants(string, comparisonType);
+  }
+
+  System.out.print("Would you like to compare more strings? (y/n): ");
+  String continueChoice = scanner.next();
+  if (continueChoice.equals("y")) {
+     main(args);
+  } else {
+     System.out.println("Thank you for using the String Comparison program!");
+  }
+}
+
+public static void countVowelsOrConsonants(String string, String comparisonType) {
+int count = 0;
+String positions = "";
+for (int i = 0; i < string.length(); i++) {
+char c = string.charAt(i);
+if ((comparisonType.equals("vowels") && isVowel(c)) ||
+(comparisonType.equals("consonants") && isConsonant(c))) {
+count++;
+positions += i + ", ";
+}
+}
+if (count > 0) {
+System.out.println("The string '" + string + "' has " + count + " " + comparisonType + " at positions: " + positions);
+} else {
+System.out.println("The string '" + string + "' does not have any " + comparisonType + ".");
+}
+}
+
+public static boolean isVowel(char c) {
+return "AEIOUaeiou".indexOf(c) != -1;
+}
+
+public static boolean isConsonant(char c) {
+return "BCDFGHJKLMNPQRSTVWXYZbcdfghjklmnpqrstvwxyz".indexOf(c) != -1;
+}
+}
